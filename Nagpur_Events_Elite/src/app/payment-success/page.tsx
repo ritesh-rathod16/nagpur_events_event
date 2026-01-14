@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Loader2, Download, Check } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
@@ -10,6 +10,25 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import { toast } from 'react-hot-toast';
 
 export default function PaymentSuccessPage() {
+  // Wrap the search params usage in a Suspense boundary as required by Next.js
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-sapphire">
+          <Header />
+          <section className="pt-40 pb-32 flex items-center justify-center min-h-[80vh]">
+            <Loader2 className="animate-spin text-gold" size={48} />
+          </section>
+          <Footer />
+        </main>
+      }
+    >
+      <PaymentSuccessContent />
+    </Suspense>
+  );
+}
+
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get('bookingId');
   const { user, loading } = useAuth();
@@ -42,7 +61,7 @@ export default function PaymentSuccessPage() {
     };
 
     fetchBooking();
-  }, [bookingId, user, loading]);
+  }, [bookingId, user, loading, router]);
 
   if (loading || loadingBooking) {
     return (
@@ -63,7 +82,9 @@ export default function PaymentSuccessPage() {
         <section className="pt-40 pb-32 flex items-center justify-center min-h-[80vh]">
           <div className="text-center">
             <h2 className="text-pearl text-2xl font-bold">Booking not found</h2>
-            <Button onClick={() => router.push('/events')} className="mt-6">Browse Events</Button>
+            <Button onClick={() => router.push('/events')} className="mt-6">
+              Browse Events
+            </Button>
           </div>
         </section>
         <Footer />
@@ -81,7 +102,10 @@ export default function PaymentSuccessPage() {
               <Check className="text-gold mx-auto" size={56} />
             </div>
             <h1 className="text-pearl font-poppins text-3xl mb-4">Booking Confirmed!</h1>
-            <p className="text-pearl/60 mb-6">Booking ID: <strong className="text-gold">{booking.bookingId}</strong></p>
+            <p className="text-pearl/60 mb-6">
+              Booking ID:{' '}
+              <strong className="text-gold">{booking.bookingId}</strong>
+            </p>
 
             <div className="flex gap-4 justify-center">
               <Button onClick={() => window.open(`/api/download/ticket/${booking.bookingId}`)}>
@@ -95,11 +119,15 @@ export default function PaymentSuccessPage() {
             <div className="mt-8 text-left">
               <h3 className="text-gold font-bold">Event</h3>
               <p className="text-pearl/80">{booking.event.title}</p>
-              <p className="text-pearl/60">{new Date(booking.event.date).toLocaleString()}</p>
+              <p className="text-pearl/60">
+                {new Date(booking.event.date).toLocaleString()}
+              </p>
             </div>
 
             <div className="mt-8">
-              <Button onClick={() => router.push('/events')} variant="outline">Back to events</Button>
+              <Button onClick={() => router.push('/events')} variant="outline">
+                Back to events
+              </Button>
             </div>
           </div>
         </div>
