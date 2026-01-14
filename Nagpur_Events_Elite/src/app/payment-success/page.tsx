@@ -1,7 +1,7 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Loader2, Download, Check } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
@@ -9,35 +9,23 @@ import { Footer } from '@/components/layout/Footer';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { toast } from 'react-hot-toast';
 
-// Force dynamic rendering since this page uses search params
+// Force dynamic rendering since this page depends on runtime query params
 export const dynamic = 'force-dynamic';
 
 export default function PaymentSuccessPage() {
-  // Wrap the search params usage in a Suspense boundary as required by Next.js
-  return (
-    <Suspense
-      fallback={
-        <main className="min-h-screen bg-sapphire">
-          <Header />
-          <section className="pt-40 pb-32 flex items-center justify-center min-h-[80vh]">
-            <Loader2 className="animate-spin text-gold" size={48} />
-          </section>
-          <Footer />
-        </main>
-      }
-    >
-      <PaymentSuccessContent />
-    </Suspense>
-  );
-}
-
-function PaymentSuccessContent() {
-  const searchParams = useSearchParams();
-  const bookingId = searchParams.get('bookingId');
   const { user, loading } = useAuth();
+  const router = useRouter();
+  const [bookingId, setBookingId] = useState<string | null>(null);
   const [loadingBooking, setLoadingBooking] = useState(true);
   const [booking, setBooking] = useState<any>(null);
-  const router = useRouter();
+
+  // Read bookingId from the URL on the client instead of useSearchParams
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('bookingId');
+    setBookingId(id);
+  }, []);
 
   useEffect(() => {
     if (loading) return;
