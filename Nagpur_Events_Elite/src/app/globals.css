@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;700&family=Sacramento&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-poppins: var(--font-poppins);
+  --font-devanagari: var(--font-devanagari);
+  --font-script: var(--font-sacramento);
+  
+  --color-sapphire: #0A2540;
+  --color-gold: #FF9933;
+  --color-saffron: #FF9933;
+  --color-orange-nagpur: #FFA500;
+  --color-pearl: #FFFFFF;
+  --color-charcoal: #2D3748;
+  --color-forest: #228B22;
+  --color-maroon: #800000;
+  --color-light-gold: #FFD700;
+  --color-soft-blue: #E3F2FD;
+  --color-coral: #FF6B6B;
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-devanagari: "Noto Sans Devanagari", sans-serif;
+  --font-sacramento: "Sacramento", cursive;
+
+  --radius: 0.5rem;
+  --background: #FFFFFF;
+  --foreground: #2D3748;
+  --card: #FFFFFF;
+  --card-foreground: #2D3748;
+  --popover: #FFFFFF;
+  --popover-foreground: #2D3748;
+  --primary: #0A2540;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FF9933;
+  --secondary-foreground: #0A2540;
+  --muted: #E3F2FD;
+  --muted-foreground: #4A5568;
+  --accent: #FFA500;
+  --accent-foreground: #0A2540;
+  --destructive: #800000;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #FF9933;
+}
+
+.dark {
+  --background: #0A2540;
+  --foreground: #FFFFFF;
+  --card: #15304D;
+  --card-foreground: #FFFFFF;
+  --popover: #0A2540;
+  --popover-foreground: #FFFFFF;
+  --primary: #FF9933;
+  --primary-foreground: #0A2540;
+  --secondary: #1a202c;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #FFA500;
+  --accent-foreground: #0A2540;
+  --destructive: #800000;
+  --border: rgba(255, 153, 51, 0.2);
+  --input: rgba(255, 153, 51, 0.2);
+  --ring: #FF9933;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-bold tracking-tight;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 153, 51, 0.1);
+}
+
+.dark .glass {
+  background: rgba(10, 37, 64, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 153, 51, 0.1);
+}
