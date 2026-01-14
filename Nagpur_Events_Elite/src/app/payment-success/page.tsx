@@ -9,6 +9,9 @@ import { Footer } from '@/components/layout/Footer';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { toast } from 'react-hot-toast';
 
+// Force dynamic rendering since this page uses search params
+export const dynamic = 'force-dynamic';
+
 export default function PaymentSuccessPage() {
   // Wrap the search params usage in a Suspense boundary as required by Next.js
   return (
